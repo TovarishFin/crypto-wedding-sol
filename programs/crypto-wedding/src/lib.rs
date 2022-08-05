@@ -62,8 +62,4 @@ pub mod crypto_wedding {
     pub fn divorce(ctx: Context<Divorce>) -> Result<()> {
         instructions::divorce(ctx)
     }
-
-    pub fn setup_ring(ctx: Context<SetupRing>) -> Result<()> {
-        instructions::setup_ring(ctx)
-    }
 }

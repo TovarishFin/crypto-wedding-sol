@@ -32,17 +32,6 @@ pub fn check_account_initialized(account: &UncheckedAccount) -> bool {
     !data_empty || has_lamps
 }
 
-pub fn couple_pubkeys(partner_a: &Pubkey, partner_b: &Pubkey) -> Pubkey {
-    let a: [u8; 32] = partner_a.to_bytes();
-    let b: [u8; 32] = partner_b.to_bytes();
-    let mut c: [u8; 32] = [0; 32];
-    for i in 0..32 {
-        c[i] = a[i] ^ b[i]
-    }
-
-    Pubkey::new_from_array(c)
-}
-
 pub fn sort_pubkeys<'a>(pubkey_a: &'a Pubkey, pubkey_b: &'a Pubkey) -> (&'a Pubkey, &'a Pubkey) {
     match pubkey_a.cmp(pubkey_b) {
         Ordering::Less => (pubkey_a, pubkey_b),
