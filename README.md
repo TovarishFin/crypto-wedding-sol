@@ -28,6 +28,49 @@ simply run:
 anchor test
 ```
 
+## Repo Layout
+
+```
+├── Anchor.toml                         // configuration file for anchor. handles things like network etc.
+├── Cargo.lock                          // rust package manager locks in dependencies (similar to package.lock.json)
+├── Cargo.toml                          // rust package manager file, dependencies are listed/added here
+├── README.md                           // starting file for most users, explains what the repo is about
+├── app                                 // this is where you could put your javascript based site/dapp code (if you are into monorepos)
+├── external_progs                      // you can store program code that you download off of mainnet or some other chain and store it here. you can then add that code the the test validator when testing via Anchor.toml
+│   ├── token.so                        // spl_token code
+│   └── token_metadata.so               // token_metadata code
+├── migrations                          // directory where you put different code for setup/deployment of programs
+│   └── deploy.ts                       // an example script that you could modify to deploy your program to a cluster (mainnet, devnet, etc)
+├── package-lock.json                   // javascript version of Cargo.lock, for javascript based tests
+├── package.json                        // list of javascript dependencies and scripts
+├── programs                            // this is where all developed solana program code should go
+│   └── crypto-wedding                  // the directory where all crypto-wedding program code goes
+│       ├── Cargo.toml                  // another dependency file for the program itself
+│       ├── Xargo.toml                  // beyond the scope of this tutorial. more info can be found here: https://github.com/japaric/xargo
+│       └── src                         // all program codes goes in here
+│           ├── errors.rs               // a file that generally handles errors for crypto-wedding
+│           ├── instructions            // various instructions which can be given to crypto-wedding to be executed
+│           │   ├── cancel_wedding.rs
+│           │   ├── close_partner.rs
+│           │   ├── divorce.rs
+│           │   ├── give_answer.rs
+│           │   ├── mod.rs
+│           │   ├── setup_partner.rs
+│           │   ├── setup_wedding.rs
+│           │   ├── update_name.rs
+│           │   ├── update_partner.rs
+│           │   └── update_vows.rs
+│           ├── lib.rs                  // the main entrypoint of the program
+│           ├── state.rs                // contains code relating to state of crypto-wedding
+│           └── util.rs                 // various utility functions that could be used in different places
+├── targetYEvD5g                        // not entirely sure tbh :) its a place where builds of some sort would in theory go...
+├── tests                               // directory where all tests go.
+│   ├── crypto-wedding.ts               // wedding specific tests
+│   └── helpers.ts                      // various small helper functions to make testing easier
+├── tsconfig.json                       // typescript configuration file. beyond the scope of this tutorial
+└── yarn.lock                           // another js dependency lockfile... like package.lock.json
+```
+
 ## Possible Updates
 
 There are plenty of little extra bits of functionality that can be added... here are a few ideas:
