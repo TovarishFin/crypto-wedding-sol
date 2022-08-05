@@ -4,16 +4,20 @@ skip-lint = false
 [programs.localnet]
 crypto_wedding = "sRT1XWM1ZoPVaBzsvjmCUfjGxBGbNAWGdRc8V15t7aQ"
 
-[[test.genesis]]
-address = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
-program = "./external_progs/token_metadata.so"
+# this is how you would go about adding the token program to localnet when testing however...
+# spl_token, spl_memo_1_0, spl_memo_3_0, and spl_associated_token_account are all included
+# when using test-validator, which is what anchor uses.
+# this can be seen @solana/test-validator/src/lib.rs#594
+# [[test.genesis]]
+# address = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+# program = "./external_progs/token_metadata.so"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "localnet"
-wallet = "/Users/codylamson/.config/solana/id.json"
+wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/rings.ts"
