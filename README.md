@@ -81,42 +81,6 @@ This can be extremely simple where the user sets a url where a wedding photo is 
 be something more complex which uses IPFS, Arweave, or Shadowdrive. AWS S3 bucket is always a dead
 solution though :). Make sure to setup permissions so only wedding users can update a wedding's photo!
 
-### Rings as NFTs which are handled by the contract
-
-The contract could act like some kind of an escrow for two NFT rings which are exchanged when
-getting married. You could also just add this exchange in 2 simple token instructions which are
-included with the wedding instructions. But that would probably be a lot more simple and boring.
-The main thing that you will need to get comfortable with will be CPIs (cross program invocations).
-Here is some example code for approving a ring from the crypto-wedding program to get you started:
-
-```rust
-use anchor_lang::prelude::*;
- use anchor_spl::token::{self, Approve, Token};
-
- pub fn setup_ring(ctx: Context<SetupRing>) -> Result<()> {
-     let token_info = ctx.accounts.token.to_account_info();
-     let call_accts = Approve {
-         to: ctx.accounts.to.to_account_info(),
-         delegate: ctx.accounts.cryto_wedding.to_account_info(),
-         authority: ctx.accounts.authority.to_account_info(),
-     };
-     let app_ctx = CpiContext::new(token_info, call_accts);
-     token::approve(app_ctx, 1)?;
-     Ok(())
- }
-
- #[derive(Accounts)]
- pub struct SetupRing<'info> {
-     token: Program<'info, Token>,
-     /// CHECK: whatever for now
-     to: AccountInfo<'info>,
-     /// CHECK: whatever for now
-     authority: AccountInfo<'info>,
-     /// CHECK: whatever for now
-     cryto_wedding: AccountInfo<'info>,
- }
-```
-
 ### Build a frontend for it
 
 You will need to learn how to use the needed javascript libraries out there for this. There are
